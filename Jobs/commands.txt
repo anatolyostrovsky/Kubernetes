@@ -1,0 +1,5 @@
+kubectl get event --field-selector involvedObject.name=myapp-pod
+
+kubectl get event --field-selector involvedObject.name=myapp-pod --watch
+
+kubectl create service clusterip mydb --tcp=5432:5432

@@ -1,0 +1,7 @@
+kubectl create -f deployment.yaml
+
+kubectl set image deployment app-deolyment app=app:v2.0 --record
+
+kubectl rollout undo deployment app-deployment
+
+kubectl rollout history deployment app-deployment

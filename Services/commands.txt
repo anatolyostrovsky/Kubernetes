@@ -1,0 +1,7 @@
+kubectl create -f deployment.yaml
+
+kubectl expose deployment nginx-deployment --port 80 --target-port 80
+
+kubectl describe service nginx-deploymnet
+
+ubectl run tmp-pod --rm -i --tty --image nicolaka/netshoot -- /bin/bash
