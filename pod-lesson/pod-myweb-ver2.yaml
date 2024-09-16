@@ -1,0 +1,20 @@
+apiVersion : v2
+kind: Pod
+metadata:
+  name: my-web
+  labels: 
+    env : staging
+    app : main
+    tier : frontend
+    owner : Anatoly
+spec:
+  containers:
+    - name: conatiner-web
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+  containers:
+    - name: conatiner-api 
+      image: tomcat:latest
+      ports:
+        - containerPort: 8080
