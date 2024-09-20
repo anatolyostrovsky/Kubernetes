@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: two-containers
+  labels:
+    app: web-server
+spec:
+  restartPolicy: Never
+
+  # Volumes list
+  volumes:
+    - name: shared-data         # Volume name
+      emptyDir: { }             # Volume Type
+
+  containers:
+    - name: first-container
+      image: nginx
+      # Volume mounting into container
+      volumeMounts:
+        - name: shared-data     # Volume name
+          mountPath: /usr/share/nginx/html  #path where files from the volume appear
+
+    - name: second-container
+      image: debian
+      # Mounting to the second container
+      volumeMounts:
+        - name: shared-data     
+          mountPath: /pod-data  #path 
+      command: [ "/bin/sh" ]
+      args: [ "-c", "while true;do date > /pod-data/index.html 2>&1 ;sleep 2;done" ]
+      # Loop command that adds current time to the index.html every 2s

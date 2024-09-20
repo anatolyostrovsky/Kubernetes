@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: two-containers
+  labels:
+    app: web-server
+spec:
+  restartPolicy: Never
+
+  volumes:
+    - name: shared-data
+      emptyDir: { }
+    - name: nginx-config # this volume can be used to configure Nginx
+      configMap: # ConfigMap nginx-config will be mounted to the first-container
+        name: nginx-config # 
+
+  containers:
+    - name: first-container
+      image: nginx
+      volumeMounts:
+        - name: shared-data
+          mountPath: /usr/share/nginx/html
+        - name: nginx-config # 
+          mountPath: /etc/nginx/conf.d # 
+          readOnly: true # 
+    - name: second-container
+      image: debian
+      volumeMounts:
+        - name: shared-data
+          mountPath: /pod/data
+      command: [ "/bin/sh" ]
+      args: [ "-c", "while true;do date > /pod-data/index.html 2>&1 ;sleep 2;done" ]
