@@ -1,0 +1,12 @@
+helm search hub grafana --max-col-width 80
+
+
+helm show values grafana/grafana --version 8.4.9 > values.yaml
+
+helm upgrade --install grafana grafana/grafana -f values.yaml -n monitoring
+
+helm history grafana -n monitoring #check release history
+
+helm rollback grafana 1 -n monitoring #rollback to v1
+
+helm upgrade --install billing . --version 1.0.0
